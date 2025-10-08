@@ -342,7 +342,7 @@ export const getPosts = async (req, res) => {
       category,
       timeRange,
       page = 1, 
-      limit = 12,
+      limit = 100,
       sortBy = 'createdAt',
       sortOrder = 'desc'
     } = req.query;

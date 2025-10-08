@@ -55,8 +55,8 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    // Fetch real posts from database
-    getPosts();
+    // Fetch real posts from database with higher limit to show all posts
+    getPosts({ limit: 100 });
   }, [getPosts]);
 
   // Listen for category changes from Navbar
