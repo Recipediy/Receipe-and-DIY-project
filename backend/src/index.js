@@ -47,8 +47,8 @@ const allowedOrigins = [
     ...rawOrigins.flatMap((value) =>
         value.split(',').map((origin) => origin.trim()).filter(Boolean)
     ),
-    'receipe-and-diy-project-project400s-projects.vercel.app',
-    'receipe-and-diy-project-kappa.vercel.app',
+    'https://receipe-and-diy-project-project400s-projects.vercel.app',
+    'https://receipe-and-diy-project-kappa.vercel.app',
     'http://localhost:5173',
     'https://localhost:5173'
 ];

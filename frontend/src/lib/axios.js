@@ -2,7 +2,7 @@ import axios from "axios";
 import { useLoadingStore } from '../store/useLoadingStore';
 
 export const axiosInstance = axios.create({
-    baseURL: 'receipe-and-diy-project-wukh.vercel.app' ,
+    baseURL: import.meta.env.VITE_API_URL ,
     withCredentials: true,
     timeout: 10000, // 10 second timeout
 });
