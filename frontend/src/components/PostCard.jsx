@@ -179,12 +179,23 @@ const PostCard = ({ post, showDistance = false, userLocation = null, className =
       {/* Interactions */}
       <div className="glass-post-actions">
         <InteractionBar post={post} className="mb-3 sm:mb-4" />
-        <Link
-          to={`/post/${post._id}`}
-          className="glass-post-button w-full text-center py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium block text-sm sm:text-base touch-target"
-        >
-          View Details
-        </Link>
+        <div className="flex gap-2">
+          <Link
+            to={`/post/${post._id}`}
+            className="glass-post-button flex-1 text-center py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium block text-sm sm:text-base touch-target"
+          >
+            View Details
+          </Link>
+          {post.steps && post.steps.length > 0 && (
+            <Link
+              to={`/post/${post._id}?stepMode=true`}
+              className="glass-post-button flex items-center justify-center px-3 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-medium text-sm sm:text-base touch-target bg-gradient-to-r from-teal-500/20 to-violet-500/20 hover:from-teal-500/30 hover:to-violet-500/30 border-teal-400/40"
+              title="Start Step-by-Step Mode"
+            >
+              <span className="text-base sm:text-lg">▶️</span>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

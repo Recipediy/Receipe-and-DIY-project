@@ -64,6 +64,20 @@ button {
   animation: shimmer 2s infinite;
 }
 
+/* Fade-in animation for Step-by-Step Mode */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
 /* Global liquid glass theme overrides */
 /* We can't use @apply for custom non-Tailwind classes here because Tailwind doesn't know them; duplicate core styles instead. */
 @layer components {

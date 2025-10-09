@@ -25,6 +25,7 @@ import InteractionBar from '../components/InteractionBar';
 import InlineComments from '../components/InlineComments';
 import StepCard from '../components/StepCard';
 import ReportUserModal from '../components/ReportUserModal';
+import StepByStepMode from '../components/StepByStepMode';
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -36,12 +37,21 @@ const PostDetail = () => {
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const [showVideo, setShowVideo] = useState(false);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [isStepByStepMode, setIsStepByStepMode] = useState(false);
 
   useEffect(() => {
     if (postId) {
       getPostById(postId);
     }
   }, [postId, getPostById]);
+
+  // Check URL parameters for auto-opening Step-by-Step mode
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('stepMode') === 'true' && currentPost?.steps?.length > 0) {
+      setIsStepByStepMode(true);
+    }
+  }, [currentPost]);
 
   const handleLike = async () => {
     if (!authUser) {
@@ -494,12 +504,25 @@ const PostDetail = () => {
 
             {/* Steps - NEW UNIFIED SYSTEM */}
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3 contrast-on-glass">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-400 to-teal-400 flex items-center justify-center">
-                  <span className="text-white text-sm">{currentPost.type === 'recipe' ? '👨‍🍳' : '🔨'}</span>
-                </div>
-                Step-by-Step Guide
-              </h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-2xl font-bold text-white flex items-center gap-3 contrast-on-glass">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-violet-400 to-teal-400 flex items-center justify-center">
+                    <span className="text-white text-sm">{currentPost.type === 'recipe' ? '👨‍🍳' : '🔨'}</span>
+                  </div>
+                  Step-by-Step Guide
+                </h2>
+                
+                {/* Start Step-by-Step Mode Button */}
+                {currentPost.steps && currentPost.steps.length > 0 && (
+                  <button
+                    onClick={() => setIsStepByStepMode(true)}
+                    className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-teal-500 to-violet-500 text-white font-semibold hover:from-teal-600 hover:to-violet-600 hover:scale-105 transition-all duration-300 shadow-lg shadow-teal-500/50 hover:shadow-teal-500/70"
+                  >
+                    <Play className="w-5 h-5" />
+                    Start Step-by-Step Mode
+                  </button>
+                )}
+              </div>
 
               {/* Summary Cards */}
               {currentPost.steps && currentPost.steps.length > 0 && (
@@ -669,6 +692,14 @@ const PostDetail = () => {
           reportedUserId={currentPost.author._id}
           postId={currentPost._id}
           postTitle={currentPost.title}
+        />
+      )}
+
+      {/* Step-by-Step Mode Modal */}
+      {isStepByStepMode && currentPost && (
+        <StepByStepMode
+          post={currentPost}
+          onClose={() => setIsStepByStepMode(false)}
         />
       )}
     </div>
